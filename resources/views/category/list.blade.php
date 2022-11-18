@@ -29,7 +29,9 @@
 
             </div>
             <div>
-                <a class="btn btn-danger mt-5" href="{{ route('category.create') }}">Create Category</a>
+                <a class="btn btn-danger mt-5 me-3" href="{{ route('book.list') }}">Book List</a>
+                <a class="btn btn-danger mt-5 me-3" href="{{ route('book.create') }}">Book Create</a>
+                <a class="btn btn-danger mt-5 me-3" href="{{ route('category.create') }}">Create Category</a>
             </div>
         </div>
     </div>

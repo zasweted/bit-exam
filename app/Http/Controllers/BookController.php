@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use Intervention\Image\Facades\Image;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -16,6 +16,7 @@ class BookController extends Controller
      */
     public function list(Book $book, Request $request)
     {
+        
         $books = $book->bookList($request);
 
         return view('book.list', [
