@@ -34,7 +34,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="page_count" class="form-label">Add Book page_count</label>
+                            <label for="page_count" class="form-label">Add Book page count</label>
                             <input type="number" name="page_count" class="form-control" id="page_count">
                             @error('page_count')
                             <div style="color: crimson; font-size:12px">{{ $message }}</div>

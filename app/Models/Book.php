@@ -33,4 +33,14 @@ class Book extends Model
         return $imagePath;
     }
 
+    public function bookList($request)
+    {
+        if($request->search){
+            $searchResult = Book::where('name', 'like', '%'.$request->search.'%')->get();
+            return $searchResult;
+        }else{
+            return Book::all();
+        }
+
+    }
 }

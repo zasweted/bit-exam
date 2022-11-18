@@ -14,10 +14,13 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function list(Book $book, Request $request)
     {
+        $books = $book->bookList($request);
+
         return view('book.list', [
-            'books' => Book::all()
+            'books' => $books,
+            'search' => $request->search ?? ''
         ]);
     }
 

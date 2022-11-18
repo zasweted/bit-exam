@@ -29,10 +29,12 @@ Route::post('/category/update/{category}', [CategoryController::class, 'update']
 Route::delete('/category/delete/{category}', [CategoryController::class, 'destroy'])->name('category.delete')->middleware('gate:admin');
 
 
-Route::get('/book/list', [BookController::class, 'list'])->name('book.list')->middleware('gate:admin');
+Route::get('/book/list', [BookController::class, 'list'])->name('book.list')->middleware('gate:user');
 Route::get('/book/create', [BookController::class, 'create'])->name('book.create')->middleware('gate:admin');
 Route::post('/book/store', [BookController::class, 'store'])->name('book.store')->middleware('gate:admin');
 Route::get('/book/edit/{book}', [BookController::class, 'edit'])->name('book.edit')->middleware('gate:admin');
 Route::post('/book/update/{book}', [BookController::class, 'update'])->name('book.update')->middleware('gate:admin');
 Route::delete('/book/delete/{book}', [BookController::class, 'destroy'])->name('book.delete')->middleware('gate:admin');
+
+
 

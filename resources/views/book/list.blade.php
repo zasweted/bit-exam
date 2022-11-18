@@ -10,25 +10,35 @@
                     <h2>Book List</h2>
                 </div>
                 <div class="card-body">
+                        <form action="{{ route('book.list') }}" method="get">
+                            @csrf
+                            <div class=" d-flex flex-row col-4 mb-4 mt-4">
+                                <label class="form-label mx-2" for="search">Search: </label>
+                                <input type="text" name="search" id="search" value="{{ $search }}">
+                                <button type="submit" class="btn p-0 px-2 btn-primary mx-2">Search</button>
+                            </div>
+                        </form>
                     @forelse($books as $book)
                     <div class="d-flex flex-column my-4">
                         <div>
                             <h1>{{ $book->name }}</h1>
-                            <p>Description:  {{ $book->description }}</p>
-                            <p>ISBN:  {{ $book->isbn }}</p>
-                            <p>Page coun:  {{ $book->page_count }}</p>
-                            <p>Category:  {{ $book->getCategory->category }}</p>
+                            <p>Description: {{ $book->description }}</p>
+                            <p>ISBN: {{ $book->isbn }}</p>
+                            <p>Page coun: {{ $book->page_count }}</p>
+                            <p>Category: {{ $book->getCategory->category }}</p>
                             <img class="w-75" src="/storage/{{ $book->image }}" alt="book_cover">
                         </div>
+                        @if(Auth::user()->role >= 10)
                         <div class="my-4">
                             <form action="{{ route('book.delete', $book) }}" method="post">
-                            <a href="{{ route('book.edit', $book) }}" class="btn btn-warning">Edit Book</a>
-                            <button class=" ms-3 btn btn-danger">Delete Book</button>
-                            @csrf
-                            @method('delete')
+                                <a href="{{ route('book.edit', $book) }}" class="btn btn-warning">Edit Book</a>
+                                <button class=" ms-3 btn btn-danger">Delete Book</button>
+                                @csrf
+                                @method('delete')
                             </form>
-                            
                         </div>
+
+                        @endif
 
                     </div>
                     @empty
