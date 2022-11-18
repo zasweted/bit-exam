@@ -14,7 +14,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="category" class="form-label">Add Category</label>
-                            <input type="text" name="dish_name" class="form-control" id="category">
+                            <input type="text" name="category" class="form-control" id="category">
                             @error('category')
                             <div style="color: crimson; font-size:12px">{{ $message }}</div>
                             @enderror

@@ -17,6 +17,9 @@
                     {{ __('You are logged in!') }}
                 </div>
             </div>
+                <div>
+                    <a class="btn btn-danger mt-5" href="{{ route('category.create') }}">Create Category</a>
+                </div>
         </div>
     </div>
 </div>
