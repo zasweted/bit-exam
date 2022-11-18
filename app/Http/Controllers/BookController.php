@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Http\Requests\StoreBookRequest;
-use App\Http\Requests\UpdateBookRequest;
+use Intervention\Image\Facades\Image;
+use App\Models\Category;
+use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -13,9 +14,11 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function list()
     {
-        //
+        return view('book.list', [
+            'books' => Book::all()
+        ]);
     }
 
     /**
@@ -25,7 +28,9 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('book.create', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -34,9 +39,29 @@ class BookController extends Controller
      * @param  \App\Http\Requests\StoreBookRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreBookRequest $request)
+    public function store(Request $request, Book $book)
     {
-        //
+        
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'isbn' => ['required', 'min:13', 'max:13'],
+            'page_count' => 'required',
+            'image' => ['required', 'image'],
+            'category_id' => 'required'
+        ]);
+
+
+        Book::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'isbn' => $request->isbn,
+            'page_count' => $request->page_count,
+            'image' => $book->saveImage($request),
+            'category_id' => $request->category_id
+        ]);
+
+        return redirect()->route('book.list');
     }
 
     /**
@@ -58,7 +83,10 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return view('book.edit', [
+            'categories' => Category::all(),
+            'book' => $book
+        ]);
     }
 
     /**
@@ -68,9 +96,37 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBookRequest $request, Book $book)
+    public function update(Request $request, Book $book)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'isbn' => ['required', 'min:13', 'max:13'],
+            'page_count' => 'required',
+            'image' => 'image',
+            'category_id' => 'required'
+        ]);
+
+        if($request->hasFile('image')){
+            $book->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'isbn' => $request->isbn,
+                'page_count' => $request->page_count,
+                'image' => $book->updateImage($request),
+                'category_id' => $request->category_id
+            ]);
+        }else{
+            $book->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'isbn' => $request->isbn,
+                'page_count' => $request->page_count,
+                'category_id' => $request->category_id
+            ]);
+        }
+
+        return redirect()->route('book.list');
     }
 
     /**
@@ -81,6 +137,13 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        
+        if($book->image){
+            
+            unlink(public_path().'/storage/'. $book->image);
+        }
+
+        $book->delete();
+        return redirect()->route('book.list');
     }
 }

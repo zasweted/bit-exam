@@ -22,7 +22,7 @@
                         
 
                         <div>
-                            <button type="submit" class="btn btn-primary mt-4">Edit Category</button>
+                            <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
                             <a href="{{ route('category.list') }}" class="btn btn-primary mx-2 mt-4">Back</a>
                         </div>
                 </div>

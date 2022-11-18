@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Intervention\Image\Facades\Image;
 
 class Book extends Model
 {
@@ -13,6 +14,23 @@ class Book extends Model
 
     public function getCategory()
     {
-        return $this->belongsToMany(Category::class, 'categry_id', 'id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+
+    public function saveImage($requestImage)
+    {
+        $imagePath = $requestImage->image->store('uploads', 'public');
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit(400, 800);
+        $image->save();
+        return $imagePath;
+    }
+    public function updateImage($requestImage)
+    {
+        unlink(public_path().'/storage/'. $this->image);
+        $imagePath = $requestImage->image->store('uploads', 'public');
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit(400, 800);
+        $image->save();
+        return $imagePath;
+    }
+
 }
