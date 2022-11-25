@@ -17,8 +17,13 @@
                             <p>{{ $category->category }}</p>
                         </div>
                         <div>
-                            <a href="{{ route('category.edit', $category) }}" class=" mx-3 btn btn-warning">Edit category</a>
-                            <a href="{{ route('category.delete', $category) }}" class="btn btn-danger">Delete category</a>
+                            <form action="{{ route('category.delete', $category) }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <a href="{{ route('category.edit', $category) }}" class=" mx-3 btn btn-warning">Edit category</a>
+                                <button class="btn btn-danger">Delete category</button>
+
+                            </form>
                         </div>
 
                     </div>

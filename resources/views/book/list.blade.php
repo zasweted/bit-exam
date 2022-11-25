@@ -47,11 +47,11 @@
                 </div>
 
             </div>
-            @if(Auth::user()->role = 1)
+           
             <div>
                 <a class="btn btn-danger mt-5" href="{{ route('home') }}">Back</a>
             </div>
-            @endif
+            
             @if(Auth::user()->role >= 10)
             <div>
                 <a class="btn btn-danger mt-5" href="{{ route('book.create') }}">Add Book</a>
